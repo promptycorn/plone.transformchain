@@ -1,8 +1,9 @@
+from pathlib import Path
 from setuptools import find_packages
 from setuptools import setup
 
 
-version = '2.0.2'
+version = (Path(__file__).resolve().parent / 'version.txt').read_text().strip()
 
 setup(
     name='plone.transformchain',
@@ -23,10 +24,6 @@ setup(
         "Framework :: Plone :: Core",
         "License :: OSI Approved :: BSD License",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 2.7",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
     keywords='zope2 repoze transform',
@@ -35,8 +32,9 @@ setup(
     url='https://pypi.org/project/plone.transformchain',
     license='BSD',
     packages=find_packages(),
-    namespace_packages=['plone'],
+
     include_package_data=True,
+    python_requires='>=3.10',
     zip_safe=False,
     extras_require={
         'repoze': ['repoze.zope2'],
@@ -48,7 +46,7 @@ setup(
         'zope.interface',
         'zope.component',
         'zope.schema',
-        'Zope2>=2.13.23'
+        'Zope>=6.1,<7'
     ],
     entry_points="""
     """,

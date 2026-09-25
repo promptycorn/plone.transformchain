@@ -19,6 +19,8 @@ import six
 import tempfile
 import unittest
 
+from plone.transformchain.test_python3 import ResponseBoundaryTests
+
 
 HAS_ZSERVER = True
 try:

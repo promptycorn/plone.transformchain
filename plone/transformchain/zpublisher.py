@@ -97,13 +97,14 @@ def applyTransformOnSuccess(event):
         response.setBody(transformed)
     # ... but not with iterables
     else:
-        transformed = map(
-            lambda it: it.decode('utf-8')
-            if isinstance(it, six.binary_type)
-            else it,
-            transformed
-        )
-        response.setBody(''.join(transformed))
+        chunks = list(transformed)
+        if any(isinstance(chunk, six.binary_type) for chunk in chunks):
+            encoding = extractEncoding(response)
+            response.setBody(b''.join(
+                chunk.encode(encoding) if isinstance(chunk, six.text_type)
+                else chunk for chunk in chunks))
+        else:
+            response.setBody(''.join(chunks))
 
 
 @adapter(IPubBeforeAbort)
